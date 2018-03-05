@@ -1,9 +1,18 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/polymer.html">
 <script src="https://d3js.org/d3.v5.js"></script>
 <!-- NOTE: Minified version -->
 <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
 
+<!--
+TODO: Test d3.select(this.shadowRoot) in 1.x to ensure correct operation.
+Not sure how this'll work with shady DOM either.
+TODO: Remove template if not needed.
+ -->
+
 <dom-module id="deep-d3">
+  <template>
+    <div id="test"></div>
+  </template>
   <script>
     /**
      * `deep-d3`
@@ -14,7 +23,13 @@
      * @demo demo/index.html
      */
     Polymer({
-      is: 'deep-d3'
+      is: 'deep-d3',
+      attached() {
+        if(!d3) return;
+        d3.select(this.shadowRoot).
+          append('svg').attr('width', 50).attr('height', 50).
+          append('circle').attr('cx', 25).attr('cy', 25).attr('r', 25).style('fill', 'purple');
+      }
     });
   </script>
 </dom-module>
